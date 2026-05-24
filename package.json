@@ -1,17 +1,22 @@
 {
-  "name": "templ",
-  "displayName": "templ-vscode",
-  "description": "Provides syntax highlighting and templ LSP integration.",
-  "publisher": "a-h",
-  "icon": "templ.png",
+  "name": "gothicframework-vscode",
+  "displayName": "Gothic Framework",
+  "description": "Enhanced DX for the Gothic Framework. Provides automatic templ configuration, specialized snippets, and full LSP integration.",
+  "publisher": "felipegenef",
+  "icon": "images/gothic-icon.png",
   "repository": {
-    "url": "https://github.com/a-h/templ-vscode"
+    "url": "https://github.com/felipegenef/gothicframework-vscode"
+  },
+  "homepage": "https://github.com/felipegenef/gothicframework-vscode",
+  "bugs": {
+    "url": "https://github.com/felipegenef/gothicframework-vscode/issues"
   },
   "activationEvents": [
-    "workspaceContains:**/*.templ"
+    "workspaceContains:**/*.templ",
+    "onStartupFinished"
   ],
   "main": "./dist/main.js",
-  "version": "0.0.35",
+  "version": "0.1.1",
   "engines": {
     "vscode": "^1.95.0"
   },
@@ -26,7 +31,17 @@
     "test:update": "vscode-tmgrammar-snap -g ./tests/go.tmLanguage.json -g ./tests/css.tmLanguage.json -g ./tests/JavaScript.tmLanguage.json --updateSnapshot 'tests/snap/**/*.templ'"
   },
   "categories": [
-    "Programming Languages"
+    "Programming Languages",
+    "Snippets",
+    "Formatters"
+  ],
+  "keywords": [
+    "gothic",
+    "templ",
+    "go",
+    "golang",
+    "html",
+    "tailwindcss"
   ],
   "contributes": {
     "languages": [
@@ -58,59 +73,89 @@
     "commands": [
       {
         "command": "templ.restartServer",
-        "title": "Templ: Restart Language Server"
+        "title": "Gothic Framework: Restart Templ Language Server"
+      },
+      {
+        "command": "gothicframework.applyRecommendedSettings",
+        "title": "Gothic Framework: Apply Recommended Settings"
+      },
+      {
+        "command": "gothicframework.showGeneratedFiles",
+        "title": "Gothic Framework: Show Generated _templ.go Files"
       }
     ],
-    "configuration": {
-      "title": "templ",
-      "properties": {
-        "templ.goplsLog": {
-          "type": "string",
-          "default": "",
-          "description": "The path used to write gopls logs to (same as the templ -goplsLog argument)"
-        },
-        "templ.goplsRPCTrace": {
-          "type": "boolean",
-          "default": false,
-          "description": "Set to true to enable gopls RPC tracing (same as the templ -goplsRPCTrace argument)"
-        },
-        "templ.goplsRemote": {
-          "type": "string",
-          "default": "",
-          "description": "The remote gopls instance to connect to. Set to \"auto\" to enable automatic management: templ will start the gopls daemon if it's not running, connect to it, and forward LSP traffic as needed (same as the templ -gopls-remote argument)"
-        },
-        "templ.noPreload": {
-          "type": "boolean",
-          "default": false,
-          "description": "Set to true to disable preloading of templ files on server startup and use custom GOPACKAGESDRIVER for lazy loading (useful for large monorepos). GOPACKAGESDRIVER environment variable must be set. (same as the templ -no-preload argument)"
-        },
-        "templ.log": {
-          "type": "string",
-          "default": "",
-          "description": "When set to a filename, templ will be written to the file (same as the templ -log argument)"
-        },
-        "templ.pprof": {
-          "type": "boolean",
-          "default": false,
-          "description": "Set to true to enable a pprof HTTP endppint (same as the templ -pprof argument)"
-        },
-        "templ.http": {
-          "type": "string",
-          "default": "",
-          "description": "Set to a value such as localhost:7474 to enable a HTTP endpoint that can be used for debugging (same as the templ -http argument)"
-        },
-        "templ.experiments": {
-          "type": "string",
-          "default": "",
-          "description": "A comma separated list of enabled experiments e.g. \"experimentfoo,experimentbar\" (same as the TEMPL_EXPERIMENT environment variable)"
-        },
-        "templ.executablePath": {
-          "type": "string",
-          "default": "",
-          "description": "Path of the templ executable. To be used if extension is unable to find the location of templ executable"
+    "configuration": [
+      {
+        "title": "Gothic Framework - Templ",
+        "properties": {
+          "templ.goplsLog": {
+            "type": "string",
+            "default": "",
+            "description": "The path used to write gopls logs to (same as the templ -goplsLog argument)"
+          },
+          "templ.goplsRPCTrace": {
+            "type": "boolean",
+            "default": false,
+            "description": "Set to true to enable gopls RPC tracing (same as the templ -goplsRPCTrace argument)"
+          },
+          "templ.goplsRemote": {
+            "type": "string",
+            "default": "",
+            "description": "The remote gopls instance to connect to. Set to \"auto\" to enable automatic management: templ will start the gopls daemon if it's not running, connect to it, and forward LSP traffic as needed (same as the templ -gopls-remote argument)"
+          },
+          "templ.noPreload": {
+            "type": "boolean",
+            "default": false,
+            "description": "Set to true to disable preloading of templ files on server startup and use custom GOPACKAGESDRIVER for lazy loading (useful for large monorepos). GOPACKAGESDRIVER environment variable must be set. (same as the templ -no-preload argument)"
+          },
+          "templ.log": {
+            "type": "string",
+            "default": "",
+            "description": "When set to a filename, templ will be written to the file (same as the templ -log argument)"
+          },
+          "templ.pprof": {
+            "type": "boolean",
+            "default": false,
+            "description": "Set to true to enable a pprof HTTP endppint (same as the templ -pprof argument)"
+          },
+          "templ.http": {
+            "type": "string",
+            "default": "",
+            "description": "Set to a value such as localhost:7474 to enable a HTTP endpoint that can be used for debugging (same as the templ -http argument)"
+          },
+          "templ.experiments": {
+            "type": "string",
+            "default": "",
+            "description": "A comma separated list of enabled experiments e.g. \"experimentfoo,experimentbar\" (same as the TEMPL_EXPERIMENT environment variable)"
+          },
+          "templ.executablePath": {
+            "type": "string",
+            "default": "",
+            "description": "Path of the templ executable. To be used if extension is unable to find the location of templ executable"
+          }
+        }
+      },
+      {
+        "title": "Gothic Framework",
+        "properties": {
+          "gothicframework.neverAskAgain": {
+            "type": "boolean",
+            "default": false,
+            "description": "If true, never show the onboarding prompt for recommended settings."
+          }
         }
       }
-    },
+    ],
+    "snippets": [
+      {
+        "language": "templ",
+        "path": "./snippets/templ.json"
+      },
+      {
+        "language": "go",
+        "path": "./snippets/go.json"
+      }
+    ],
     "configurationDefaults": {
       "explorer.fileNesting.enabled": true,
       "explorer.fileNesting.patterns": {

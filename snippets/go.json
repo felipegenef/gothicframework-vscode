@@ -1,0 +1,35 @@
+{
+  "Gothic API Route": {
+    "prefix": "gar",
+    "body": [
+      "package api",
+      "",
+      "import (",
+      "\t\"encoding/json\"",
+      "\t\"net/http\"",
+      "",
+      "\troutes \"github.com/felipegenef/gothicframework/pkg/helpers/routes\"",
+      ")",
+      "",
+      "type ${1:RouteName}Response struct {",
+      "\tMessage string `json:\"message\"`",
+      "}",
+      "",
+      "var ${1:RouteName}Config = routes.ApiRouteConfig{",
+      "\tHttpMethod: routes.GET,",
+      "\tType:       routes.DYNAMIC,",
+      "}",
+      "",
+      "func ${1:RouteName}(w http.ResponseWriter, r *http.Request) {",
+      "\tresponse, _ := json.Marshal(${1:RouteName}Response{",
+      "\t\tMessage: \"Hello World from GOTH API ROUTE\",",
+      "\t})",
+      "",
+      "\tw.Header().Set(\"Content-Type\", \"application/json\")",
+      "\tw.WriteHeader(http.StatusOK)",
+      "\tw.Write(response)",
+      "}"
+    ],
+    "description": "Generate a Gothic Framework API route"
+  }
+}

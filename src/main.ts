@@ -20,15 +20,30 @@ import { LanguageClient } from "vscode-languageclient/node";
 import { lookpath } from "lookpath";
 import { CustomLanguageClient } from "./custom-client";
 
-export async function activate(ctx: vscode.ExtensionContext) {
-  try {
-    ctx.subscriptions.push(
-      vscode.commands.registerCommand(
-        "templ.restartServer",
-        startLanguageClient,
-      ),
-    );
+import { isTemplProject } from "./detection/isTemplProject";
+import { promptForSettings } from "./onboarding/promptForSettings";
+import { registerCommands } from "./commands/registerCommands";
 
+export async function activate(ctx: vscode.ExtensionContext) {
+  // Register Gothic Framework commands
+  registerCommands(ctx);
+
+  // Register existing templ commands
+  ctx.subscriptions.push(
+    vscode.commands.registerCommand(
+      "templ.restartServer",
+      startLanguageClient,
+    ),
+  );
+
+  // Gothic Framework Onboarding (Run independently of LSP)
+  isTemplProject().then(isTempl => {
+    if (isTempl) {
+      promptForSettings(ctx);
+    }
+  });
+
+  try {
     await startLanguageClient();
   } catch (err) {
     const msg = err && (err as Error) ? (err as Error).message : "unknown";

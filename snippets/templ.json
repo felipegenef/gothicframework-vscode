@@ -1,0 +1,54 @@
+{
+  "Gothic Page Route": {
+    "prefix": "gpr",
+    "body": [
+      "package pages",
+      "",
+      "import (",
+      "\troutes \"github.com/felipegenef/gothicframework/pkg/helpers/routes\"",
+      "\t\"net/http\"",
+      ")",
+      "",
+      "type ${1:RouteName}PageProps = interface{}",
+      "",
+      "var ${1:RouteName}Config = routes.RouteConfig[${1:RouteName}PageProps]{",
+      "\tType:       routes.STATIC,",
+      "\tHttpMethod: routes.GET,",
+      "\tMiddleware: func(w http.ResponseWriter, r *http.Request) ${1:RouteName}PageProps {",
+      "\t\treturn nil",
+      "\t},",
+      "}",
+      "",
+      "templ ${1:RouteName}(props ${1:RouteName}PageProps) {",
+      "\t<div>$0</div>",
+      "}"
+    ],
+    "description": "Generate a Gothic Framework page route"
+  },
+  "Gothic Component Route": {
+    "prefix": "gcr",
+    "body": [
+      "package components",
+      "",
+      "import (",
+      "\troutes \"github.com/felipegenef/gothicframework/pkg/helpers/routes\"",
+      "\t\"net/http\"",
+      ")",
+      "",
+      "type ${1:RouteName}Props = interface{}",
+      "",
+      "var ${1:RouteName}Config = routes.RouteConfig[${1:RouteName}Props]{",
+      "\tType: routes.STATIC,",
+      "\tHttpMethod: routes.GET,",
+      "\tMiddleware: func(w http.ResponseWriter, r *http.Request) ${1:RouteName}Props {",
+      "\t\treturn nil",
+      "\t},",
+      "}",
+      "",
+      "templ ${1:RouteName}(props ${1:RouteName}Props) {",
+      "\t<div>$0</div>",
+      "}"
+    ],
+    "description": "Generate a Gothic Framework component route"
+  }
+}
