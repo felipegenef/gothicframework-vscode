@@ -2,6 +2,11 @@
 
 All notable changes to the **Gothic Framework** extension will be documented in this file.
 
+## [0.1.2] - 2026-05-24
+
+### Added
+- **Expanded Exclusions**: Added `**/topic_gen.go` to the recommended automatic file and search exclusions.
+
 ## [0.1.1] - 2026-05-24
 
 ### Fixed
