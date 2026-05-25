@@ -2,6 +2,11 @@
 
 All notable changes to the **Gothic Framework** extension will be documented in this file.
 
+## [0.1.3] - 2026-05-24
+
+### Added
+- **New Snippet**: Added `gtd` (Gothic Topic Definition) snippet for Go files.
+
 ## [0.1.2] - 2026-05-24
 
 ### Added
