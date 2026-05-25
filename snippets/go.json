@@ -41,7 +41,12 @@
       "\tFloat32Value float32",
       "}",
       "",
-      "var _ = CreateTopic(${1:TopicName}{}, TopicConfig{Name: \"${2:new-example}\", Compression: \"BROTLI\"})$0"
+      "var _ = CreateTopic(${1:TopicName}{}, TopicConfig{",
+      "\tName:             \"${2:topic-name}\",",
+      "\tCompression:      BROTLI,",
+      "\tSubscriberFnName: \"${3:${1:TopicName}Topic}\",",
+      "\tComponentFnName:  \"${4:Add${1:TopicName}Topic}\",",
+      "})$0"
     ],
     "description": "Generate a Gothic Framework topic definition"
   }

@@ -2,6 +2,11 @@
 
 All notable changes to the **Gothic Framework** extension will be documented in this file.
 
+## [0.1.4] - 2026-05-25
+
+### Changed
+- **`gtd` snippet updated**: `TopicConfig` now expands with all four fields — `Name`, `Compression`, `SubscriberFnName`, and `ComponentFnName`. The last two are tab-stop placeholders that default to the struct-derived names (`<TopicName>Topic` and `Add<TopicName>Topic`) so they can be left as-is or overridden without leaving the keyboard.
+
 ## [0.1.3] - 2026-05-24
 
 ### Added
