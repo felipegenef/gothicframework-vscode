@@ -2,6 +2,14 @@
 
 All notable changes to the **Gothic Framework** extension will be documented in this file.
 
+## [0.1.5] - 2026-05-27
+
+### Added
+- **Auto-install templ**: When the `templ` executable is not found, the extension now shows an actionable notification with "Install templ" and "Open Docs" buttons instead of a raw error. Clicking "Install templ" runs `go install github.com/a-h/templ/cmd/templ@v0.3.1020` automatically and starts the LSP on success.
+
+### Changed
+- **Import paths updated to v2**: All snippets (`gar`, `gpr`, `gcr`) now import from `github.com/felipegenef/gothicframework/v2/...` to match the Gothic Framework v2 module path.
+
 ## [0.1.4] - 2026-05-25
 
 ### Changed

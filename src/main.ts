@@ -24,6 +24,60 @@ import { isTemplProject } from "./detection/isTemplProject";
 import { promptForSettings } from "./onboarding/promptForSettings";
 import { registerCommands } from "./commands/registerCommands";
 
+async function promptInstallTempl() {
+  const install = "Install templ";
+  const docs = "Open Docs";
+  const choice = await vscode.window.showErrorMessage(
+    "Gothic Framework: `templ` executable not found. Install it to enable LSP features.",
+    install,
+    docs,
+  );
+
+  if (choice === docs) {
+    vscode.env.openExternal(
+      vscode.Uri.parse("https://templ.guide/quick-start/installation"),
+    );
+    return;
+  }
+
+  if (choice !== install) {
+    return;
+  }
+
+  const go = await lookpath("go");
+  const gothicframeworkTemplVersion="v0.3.1020"
+  if (!go) {
+    vscode.window.showErrorMessage(
+      "Gothic Framework: Go is not installed or not in PATH. Install Go first, then run: go install github.com/a-h/templ/cmd/templ@"+gothicframeworkTemplVersion,
+    );
+    return;
+  }
+
+  await vscode.window.withProgress(
+    {
+      location: vscode.ProgressLocation.Notification,
+      title: "Gothic Framework: Installing templ…",
+      cancellable: false,
+    },
+    async (progress) => {
+      try {
+        progress.report({ message: "running go install…" });
+        await run(`${go} install github.com/a-h/templ/cmd/templ@`+gothicframeworkTemplVersion);
+        vscode.window.showInformationMessage(
+          "Gothic Framework: templ installed successfully. Starting LSP…",
+        );
+        await startLanguageClient();
+      } catch (installErr) {
+        const msg =
+          installErr instanceof Error ? installErr.message : String(installErr);
+        vscode.window.showErrorMessage(
+          `Gothic Framework: Failed to install templ: ${msg}`,
+        );
+      }
+    },
+  );
+}
+
 export async function activate(ctx: vscode.ExtensionContext) {
   // Register Gothic Framework commands
   registerCommands(ctx);
@@ -46,8 +100,14 @@ export async function activate(ctx: vscode.ExtensionContext) {
   try {
     await startLanguageClient();
   } catch (err) {
-    const msg = err && (err as Error) ? (err as Error).message : "unknown";
-    vscode.window.showErrorMessage(`error initializing templ LSP: ${msg}`);
+    const isNotFound =
+      err instanceof Error && err.message.includes("Could not find templ");
+    if (isNotFound) {
+      await promptInstallTempl();
+    } else {
+      const msg = err instanceof Error ? err.message : "unknown";
+      vscode.window.showErrorMessage(`error initializing templ LSP: ${msg}`);
+    }
   }
 }
 

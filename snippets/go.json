@@ -8,7 +8,7 @@
       "\t\"encoding/json\"",
       "\t\"net/http\"",
       "",
-      "\troutes \"github.com/felipegenef/gothicframework/pkg/helpers/routes\"",
+      "\troutes \"github.com/felipegenef/gothicframework/v2/pkg/helpers/routes\"",
       ")",
       "",
       "type ${1:RouteName}Response struct {",
