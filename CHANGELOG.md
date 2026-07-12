@@ -2,6 +2,12 @@
 
 All notable changes to the **Gothic Framework** extension will be documented in this file.
 
+## [0.2.0] - 2026-07-12
+
+### Changed
+- **Snippets migrated to Gothic Framework v3**: `gpr`, `gcr`, and `gar` now import from `github.com/gothicframework/core/router` (the v3 module path) instead of the old `github.com/felipegenef/gothicframework/v2/pkg/helpers/routes`.
+- **`gtd` snippet updated for v3**: dropped the `ComponentFnName` field (removed in v3 — a topic auto-registers via its accessor, so the old `@AddXxxTopic()` mount is gone), fixed a stray `}` in the generated subscriber name, and the snippet now emits a complete topic file (`package gothicwasm` + `import . "github.com/gothicframework/core/wasm"`) matching the v3 scaffold.
+
 ## [0.1.5] - 2026-05-27
 
 ### Added

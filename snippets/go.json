@@ -8,7 +8,7 @@
       "\t\"encoding/json\"",
       "\t\"net/http\"",
       "",
-      "\troutes \"github.com/felipegenef/gothicframework/v2/pkg/helpers/routes\"",
+      "\troutes \"github.com/gothicframework/core/router\"",
       ")",
       "",
       "type ${1:RouteName}Response struct {",
@@ -35,6 +35,10 @@
   "Gothic Topic Definition": {
     "prefix": "gtd",
     "body": [
+      "package gothicwasm",
+      "",
+      "import . \"github.com/gothicframework/core/wasm\"",
+      "",
       "type ${1:TopicName} struct {",
       "\tIntValue     int",
       "\tStringValue  string",
@@ -44,8 +48,7 @@
       "var _ = CreateTopic(${1:TopicName}{}, TopicConfig{",
       "\tName:             \"${2:topic-name}\",",
       "\tCompression:      BROTLI,",
-      "\tSubscriberFnName: \"${1:TopicName}Topic}\",",
-      "\tComponentFnName:  \"Add${1:TopicName}Topic}\",",
+      "\tSubscriberFnName: \"${1:TopicName}Topic\",",
       "})$0"
     ],
     "description": "Generate a Gothic Framework topic definition"
